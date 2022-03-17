@@ -1,35 +1,59 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 function Recipe() {
+  let params = useParams();
+  const [details, setDetails] = useState({});
+  const [activeTab, setActiveTab] = useState("instructions");
 
-    let params = useParams();
-    const [details, setDetails] = useState({});
-    const [activeTab, setActiveTab] = useState('instructions');
+  const fetchDetails = async () => {
+    const data = await fetch(
+      `https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`
+    );
+    const detailData = await data.json();
+    setDetails(detailData);
+  };
 
-    const fetchDetails = async () => {
-        const data = await fetch(`https://api.spoonacular.com/recipes/${param.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`);
-        const detailData = await data.json();
-        setDetails(detailData)
-    };
+  useEffect(() => {
+    fetchDetails();
+  }, [params.name]);
 
-    useEffect(() => {
-       fetchDetails();
-    }, [params.name])
-
-    return (
-        <Wrapper>
-            <div>
-                <h2>{details.title}</h2>
-                <img src={details.image} alt={details.title} />
-            </div>
-            <Info>
-                <Button className={activeTab === 'insructions' ? 'active' : ''} onClick={() => setActiveTab('instructions')}>Instructions</Button>
-                <Button className={activeTab === 'ingredients' ? 'active' : ''} onClick={() => setActiveTab('ingredients')}>Ingredients</Button>
-            </Info>
-        </Wrapper>
-    )
+  return (
+    <Wrapper>
+      <div>
+        <h2>{details.title}</h2>
+        <img src={details.image} alt={details.title} />
+      </div>
+      <Info>
+        <Button
+          className={activeTab === "instructions" ? "active" : ""}
+          onClick={() => setActiveTab("instructions")}
+        >
+          Instructions
+        </Button>
+        <Button
+          className={activeTab === "ingredients" ? "active" : ""}
+          onClick={() => setActiveTab("ingredients")}
+        >
+          Ingredients
+        </Button>
+        {activeTab === "instructions" && (
+          <div>
+            <h3 dangerouslySetInnerHTML={{ __html: details.summary }}></h3>
+            <h3 dangerouslySetInnerHTML={{ __html: details.instructions }}></h3>
+          </div>
+        )}
+        {activeTab === "ingredients" && (
+          <ul>
+            {details.extendedIngredients.map((ingredient) => (
+              <li key={ingredient.id}>{ingredient.original}</li>
+            ))}
+          </ul>
+        )}
+      </Info>
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.div`
@@ -63,10 +87,10 @@ const Button = styled.button`
     border; 2px solid black;
     margin-right: 2rem;
     font-weight: 600;
-`
+`;
 
 const Info = styled.div`
-    margin-left: 10rem;
-`
+  margin-left: 10rem;
+`;
 
-export default Recipe
+export default Recipe;
