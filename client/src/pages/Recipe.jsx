@@ -71,7 +71,7 @@ const Wrapper = styled.div`
     }
 
     li{
-        font-size: 1.2rem
+        font-size: 1.2rem;
         line-height: 2.5rem;
     }
 
@@ -84,7 +84,7 @@ const Button = styled.button`
     padding: 1rem 2rem;
     color: #313131;
     background: white;
-    border; 2px solid black;
+    border: 2px solid black;
     margin-right: 2rem;
     font-weight: 600;
 `;

@@ -38,7 +38,7 @@ const Login = () => {
                 <button
                 onClick={handleLogin}
                 >Log In!</button>
-                <Link to='/signup'>Don't have an account? Sign up!</Link>
+                <Link to='/signup'><h3>Don't have an account? Sign up!</h3></Link>
             </Form>
         </div>
     )
@@ -52,18 +52,41 @@ const Form = styled.div`
     justify-content: center;
     align-items: center;
     border: black 2px solid;
-    border-radius: 5px;
-
+    border-radius: 1rem;
+    background: linear-gradient(35deg, #494949, #313131);
+    
     h2{
-        color: black;
+        color: white;
         padding-bottom: 1rem;
+    }
+    h3{
+        color: white;
+        margin: 0.5rem;
+    }
+    h3:hover{
+        transform: scale(1.05);
+        text-shadow: black 5px 5px;
     }
     label{
         margin: 0.6rem;
+        color: white;
+    }
+    input{
+        width: 30%;
+        padding: 0.5rem;
+        border-radius: 0.3rem;
     }
     button{
         margin: 0.6rem;
+        padding: 0.3rem;
+        color: white;
+        border-radius: 0.3rem;
+        background: linear-gradient(35deg, #494949, #313131);
+    }
+    button:hover{
+        background: linear-gradient(to right, #f27121, #e94057);
+        transform: scale(1.05);
+        cursor: pointer;
     }
 `
-
 export default Login;

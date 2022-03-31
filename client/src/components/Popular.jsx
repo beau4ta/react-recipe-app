@@ -91,7 +91,7 @@ const Card = styled.div`
       width: 100%;
       text-align: center;
       font-weight: 600;
-      font-size; 1rem;
+      font-size: 1rem;
       height: 40%;
       display: flex;
       justify-content: center;
@@ -105,6 +105,6 @@ const Gradient = styled.div`
   width: 100%;
   height: 100%;
   background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5));
-`
+`;
 
 export default Popular;

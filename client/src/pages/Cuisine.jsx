@@ -45,7 +45,7 @@ const Grid = styled(motion.div)`
     grid-gap: 3rem;
 `
 
-const Card =styled.div`
+const Card = styled.div`
     img{
         width: 100%;
         border-radius: 2rem;
