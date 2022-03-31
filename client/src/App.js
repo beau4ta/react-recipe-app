@@ -13,6 +13,7 @@ function App() {
         <Nav>
           <GiKnifeFork />
           <Logo to={'/'}>Recipes Deluxe</Logo>
+          <Login to={'/login'}>Log In!</Login>
         </Nav>
         <Search />
         <Category />
@@ -26,12 +27,19 @@ const Logo = styled(Link)`
   text-decoration: none;
   font-size: 1.5rem;
   font-weight: 400;
+  margin-right: 1rem;
+`
+
+const Login = styled(Link)`
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 400;
 `
 
 const Nav = styled.div`
   padding: 4rem 0rem;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
 
   svg{

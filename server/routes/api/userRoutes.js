@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const recipeController = require("../../controllers/recipeController");
 const passport = require("passport")
-const User = require('../../models/user')
+const User = require('../../models/User')
 const mongoose = require('mongoose');
 require('../../config/passport')(passport);
 

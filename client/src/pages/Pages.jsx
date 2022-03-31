@@ -4,6 +4,7 @@ import Cuisine from "./Cuisine";
 import Searched from "./Searched";
 import Recipe from "./Recipe";
 import { AnimatePresence } from 'framer-motion'
+import Login from "./Login";
 
 function Pages() {
   const location = useLocation();
@@ -11,6 +12,7 @@ function Pages() {
     <AnimatePresence exitBeforeEnter>
       <Routes location={location} key={location.pathname}>
         <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/cuisine/:type' element={<Cuisine />} />
         <Route path='/searched/:search' element={<Searched />} />
         <Route path='/recipe/:name' element={<Recipe />} />
