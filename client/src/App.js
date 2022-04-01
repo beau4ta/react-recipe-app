@@ -13,8 +13,8 @@ function App() {
         <Nav>
           <GiKnifeFork />
           <Logo to={'/'}>Recipes Deluxe</Logo>
-          <Login to={'/login'}>Log In!</Login>
-          <Signup to={'/signup'}>Sign Up!</Signup>
+          <Login to={'/login'}>Log In</Login>
+          <Signup to={'/signup'}>Sign Up</Signup>
         </Nav>
         <Search />
         <Category />

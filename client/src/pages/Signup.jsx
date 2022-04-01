@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSignUp = (event) => {
     event.preventDefault();
     API.createUser({
+        email: email,
       username: username,
       password: password,
     })
@@ -23,7 +25,13 @@ const Signup = () => {
   return (
     <div>
       <Form>
-        <h2>Welcome Back!</h2>
+        <h2>Sign up today!</h2>
+        <label>Email</label>
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <label>Username</label>
         <input
           type="username"

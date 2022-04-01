@@ -42,7 +42,7 @@ const Login = () => {
             </Form>
         </div>
     )
-}
+};
 
 const Form = styled.div`
     margin: 2rem 10rem;

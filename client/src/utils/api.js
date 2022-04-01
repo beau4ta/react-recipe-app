@@ -18,7 +18,7 @@ export default {
     },
 
     signIn: function (user) {
-        return axios.post("/api/user/signin", user);
+        return axios.post("/api/user/login", user);
     },
 
     checkLoggedIn: function () {
