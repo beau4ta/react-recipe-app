@@ -1,42 +1,67 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import API from '../../src/utils/api';
+import { loginUser } from '../utils/api';
+import Auth from '../utils/auth';
 
 const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+   // set initial form state
+  const [userFormData, setUserFormData] = useState({ username: '', password: '' });
+  // set state for form validation
+  const [validated] = useState(false);
 
-    const handleLogin = (event) => {
-        API.signIn({
-            username: username,
-            password: password
-        })
-        .then(res => {
-            console.log(res)
-            window.location.replace('/')
-        })
-        .catch(err => console.log(err))
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
+  };
+
+    const handleLogin =  async (event) => {
+        event.preventDefault();
+       try {
+           const response = await loginUser(userFormData);
+
+           if (!response.ok) {
+               throw new Error('Something went wrong!')
+           }
+
+           const { token, user } = await response.json();
+           console.log(user);
+           Auth.login(token);
+       } catch (err) {
+           console.error(err)
+       }
+
+       setUserFormData({
+        username: '',
+        password: '',
+      });
     };
 
     return(
         <div>
-            <Form>
+            <Form noValidate validated={validated} onSubmit={handleLogin}>
                 <h2>Welcome Back!</h2>
                 <label>Username</label>
                 <input
-                type='username'
-                placeholder='Username'
-                onChange={(e) => setUsername(e.target.value)} 
+               type='text'
+               placeholder='Your username'
+               name='username'
+               onChange={handleInputChange}
+               value={userFormData.username}
+               required
                 />
                 <label>Password</label>
                 <input
                 type='password'
-                placeholder='Password'
-                onChange={(e) => setPassword(e.target.value)} 
+                placeholder='Your password'
+                name='password'
+                onChange={handleInputChange}
+                value={userFormData.password}
+                required
                 />
                 <button
-                onClick={handleLogin}
+                disabled={!(userFormData.username && userFormData.password)}
+                type='submit'
                 >Log In!</button>
                 <Link to='/signup'><h3>Don't have an account? Sign up!</h3></Link>
             </Form>
@@ -44,7 +69,7 @@ const Login = () => {
     )
 };
 
-const Form = styled.div`
+const Form = styled.form`
     margin: 2rem 10rem;
     padding: 2rem;
     display: flex;

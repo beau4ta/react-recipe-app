@@ -1,16 +1,13 @@
 const express = require("express");
-const session = require('express-session');
 const mongoose = require('mongoose');
 const path = require("path");
 const routes = require("./routes");
 const app = express();
-const User = require("./models/User")
 const PORT = process.env.PORT || 3001;
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(session({  secret: 'secret',  resave: true,  saveUninitialized: true}));
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {

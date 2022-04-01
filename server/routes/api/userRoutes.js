@@ -1,53 +1,22 @@
-const router = require("express").Router();
-const passport = require("passport")
-const User = require('../../models/User')
-require('../../config/passport')(passport);
+const router = require('express').Router();
+const {
+  createUser,
+  getSingleUser,
+  saveRecipe,
+  deleteRecipe,
+  login,
+} = require('../../controllers/userController');
 
+// import middleware
+const { authMiddleware } = require('../../utils/auth');
 
+// put authMiddleware anywhere we need to send a token for verification of user
+router.route('/').post(createUser).put(authMiddleware, saveRecipe);
 
-router.post('/signup', function (req, res) {
-  User.create(req.body)
-    .then((user) => {
-      req.logIn(user, function (err) {
-        if (err) { return next(err); }
-        console.log(user._id)
-        return res.json(user._id);
-      })
-    })
-});
+router.route('/login').post(login);
 
+router.route('/me').get(authMiddleware, getSingleUser);
 
-//Log in Route
-router.post('/login', function (req, res, next) {
-  passport.authenticate('local', function (err, user, info) {
-    if (err) { return next(err); }
-    console.log(user)
-    if (!user) { return res.json("incorrect username"); }
-    req.logIn(user, function (err) {
-      if (err) { return next(err); }
-      console.log(user._id)
-      return res.json(user._id);
-    });
-  })(req, res, next);
-});
+router.route('/recipes/:recipeId').delete(authMiddleware, deleteRecipe);
 
-
-//check if logged in
-router.get('/check', function (req, res) {
-  console.log(req.user)
-  if (req.user) {
-    res.json(true);
-  }
-  else {
-    res.json(false)
-  }
-})
-
-//Logout Route
-router.post('/logout', function (req, res) {
-  console.log('logged out');
-  req.logout();
-  res.redirect('/')
-});
-
-module.exports = router
+module.exports = router;
